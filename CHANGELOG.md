@@ -3,6 +3,9 @@
 
 ## 0.0.5
 * Warning issued fixed and nul safety
-* 
+
 ## 0.0.6
-* Warning issued fixed and nul safety and add doc
+* Warning issued fixed and nul safety
+
+## 0.0.7
+* Warning issued fixed and nul safety
