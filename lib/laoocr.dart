@@ -176,8 +176,6 @@ class _LaoOCRScanState extends State<LaoOCRScan> {
                       ? (data) {
                           if (widget.onFaceReg != null) {
                             widget.onFaceReg!(data);
-                          } else {
-                            null;
                           }
                         }
                       : null,

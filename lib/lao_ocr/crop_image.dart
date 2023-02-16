@@ -38,8 +38,8 @@ Future<MaskForCameraViewResult?> cropImage(
   double w = cropWeight * increasedTimesW;
   double h = cropHeight * increasedTimesH;
 
-  Image croppedImage =
-      copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+  Image croppedImage = copyCrop(image,
+      x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
   MaskForCameraViewResult res = MaskForCameraViewResult();
   if (ocrType.isNotEmpty && insideLine != null) {
     MaskForCameraViewResult halfRes =
@@ -80,8 +80,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = (image.width / 10) * _position(insideLine.position);
       h = image.height.toDouble();
     }
-    Image firstCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image firstCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
 
     List<int> firstCroppedList = encodeJpg(firstCroppedImage);
     Uint8List firstCroppedBytes = Uint8List.fromList(firstCroppedList);
@@ -107,8 +107,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image secondCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image secondCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> secondCroppedList = encodeJpg(secondCroppedImage);
     Uint8List secondCroppedBytes = Uint8List.fromList(secondCroppedList);
 
@@ -123,7 +123,7 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       // w = 120;
       // h = image.height - 260;
 
-      // todo neww
+      // todo new
       y = 120;
       x = 170;
       w = image.width.toDouble() - 270;
@@ -134,8 +134,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image thirdCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image thirdCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> thirdCroppedList = encodeJpg(thirdCroppedImage);
     Uint8List thirdCroppedBytes = Uint8List.fromList(thirdCroppedList);
 
@@ -154,8 +154,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image fourCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image fourCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> fourCroppedList = encodeJpg(fourCroppedImage);
     Uint8List fourCroppedBytes = Uint8List.fromList(fourCroppedList);
 
@@ -192,8 +192,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image sixCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image sixCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> sixCroppedList = encodeJpg(sixCroppedImage);
     Uint8List sixCroppedBytes = Uint8List.fromList(sixCroppedList);
 
@@ -221,8 +221,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image secondCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image secondCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> secondCroppedList = encodeJpg(secondCroppedImage);
     Uint8List secondCroppedBytes = Uint8List.fromList(secondCroppedList);
 
@@ -240,8 +240,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image thirdCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image thirdCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> thirdCroppedList = encodeJpg(thirdCroppedImage);
     Uint8List thirdCroppedBytes = Uint8List.fromList(thirdCroppedList);
 
@@ -264,8 +264,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image fourCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image fourCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> fourCroppedList = encodeJpg(fourCroppedImage);
     Uint8List fourCroppedBytes = Uint8List.fromList(fourCroppedList);
 
@@ -283,8 +283,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image fiveCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image fiveCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> fiveCroppedList = encodeJpg(fiveCroppedImage);
     Uint8List fiveCroppedBytes = Uint8List.fromList(fiveCroppedList);
 
@@ -302,8 +302,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image sixCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image sixCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> sixCroppedList = encodeJpg(sixCroppedImage);
     Uint8List sixCroppedBytes = Uint8List.fromList(sixCroppedList);
 
@@ -330,8 +330,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = (image.width / 10) * _position(insideLine.position);
       h = image.height.toDouble();
     }
-    Image firstCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image firstCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
 
     List<int> firstCroppedList = encodeJpg(firstCroppedImage);
     Uint8List firstCroppedBytes = Uint8List.fromList(firstCroppedList);
@@ -354,8 +354,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image secondCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image secondCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> secondCroppedList = encodeJpg(secondCroppedImage);
     Uint8List secondCroppedBytes = Uint8List.fromList(secondCroppedList);
 
@@ -432,8 +432,8 @@ Future<MaskForCameraViewResult> _cropHalfImage(
       w = image.width - x;
       h = image.height.toDouble();
     }
-    Image sixCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    Image sixCroppedImage = copyCrop(image,
+        x: x.toInt(), y: y.toInt(), width: w.toInt(), height: h.toInt());
     List<int> sixCroppedList = encodeJpg(sixCroppedImage);
     Uint8List sixCroppedBytes = Uint8List.fromList(sixCroppedList);
 

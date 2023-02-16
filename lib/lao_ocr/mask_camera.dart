@@ -330,8 +330,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
   List listDataValue() {
     RegExp expDate1 =
         RegExp('^(?:0[0-9]|[12][0-9]|3[01])/(?:0[0-9]|1[01|02])/\\d{4}\$');
-    RegExp expDate2 =
-        RegExp('^(?:0[0-9]|[12][0-9]|3[01]) [A-Z]{3} \\d{4}\$');
+    RegExp expDate2 = RegExp('^(?:0[0-9]|[12][0-9]|3[01]) [A-Z]{3} \\d{4}\$');
     TextInputType keyboardInputTypeText = TextInputType.text;
     TextInputType keyboardInputTypeDate = TextInputType.datetime;
     if (widget.ocrType == "idCard" && widget.ocrSubType == "greenIdCard") {
@@ -362,7 +361,8 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
           "inputType": keyboardInputTypeDate
         },
       ];
-    } else if (widget.ocrType == "idCard" && widget.ocrSubType == "whiteIdCard") {
+    } else if (widget.ocrType == "idCard" &&
+        widget.ocrSubType == "whiteIdCard") {
       return [
         {
           "title": "Document No.",
@@ -618,13 +618,13 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                                       enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(5),
-                                          borderSide:
-                                              const BorderSide(color: Colors.red)),
+                                          borderSide: const BorderSide(
+                                              color: Colors.red)),
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(5),
-                                          borderSide:
-                                              const BorderSide(color: Colors.red))),
+                                          borderSide: const BorderSide(
+                                              color: Colors.red))),
                                   textAlign: TextAlign.center,
                                   keyboardType: inputKeyboardType,
                                   maxLength: 18,
@@ -893,7 +893,8 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
 
                 if (text.contains(RegExp('[0-9]'))) {
                   if (text.contains('-')) {
-                    result = '${text.split('-').first.split(' ').last}-${text.split('-').last}';
+                    result =
+                        '${text.split('-').first.split(' ').last}-${text.split('-').last}';
                     // print(result);
                     if (result.length >= 10 &&
                         (result.contains('-') || result.contains('/'))) {

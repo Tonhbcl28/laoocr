@@ -124,7 +124,8 @@ class _LivelinessFaceState extends State<LivelinessFace> {
         var result = regula.LivenessResponse.fromJson(json.decode(value));
         setImage(true, base64Decode(result!.bitmap!.replaceAll("\n", "")),
             regula.ImageType.LIVE);
-        setState(() => livelinessValue = result.liveness == 0 ? "Passed" : "Fail");
+        setState(
+            () => livelinessValue = result.liveness == 0 ? "Passed" : "Fail");
       }).whenComplete(() => matchFaces());
 
   Widget createButton(String text, VoidCallback onPress,
@@ -152,16 +153,18 @@ class _LivelinessFaceState extends State<LivelinessFace> {
       );
 
   Widget buildResults(title, result, Color color) => Card(
-        child: Text.rich(
-            TextSpan(text: title, style: const TextStyle(fontSize: 32), children: [
-          TextSpan(
-              text: " $result",
-              style: TextStyle(
-                fontSize: 32,
-                color: Colors.white,
-                backgroundColor: color,
-              ))
-        ])),
+        child: Text.rich(TextSpan(
+            text: title,
+            style: const TextStyle(fontSize: 32),
+            children: [
+              TextSpan(
+                  text: " $result",
+                  style: TextStyle(
+                    fontSize: 32,
+                    color: Colors.white,
+                    backgroundColor: color,
+                  ))
+            ])),
       );
 
   @override
@@ -205,7 +208,8 @@ class _LivelinessFaceState extends State<LivelinessFace> {
                             width: 5,
                             color: livelinessValue == "Passed" &&
                                     similarityValue.contains(RegExp("[0-9]")) &&
-                                    double.parse(similarityValue.split("%")[0]) >=
+                                    double.parse(
+                                            similarityValue.split("%")[0]) >=
                                         80
                                 ? Colors.green
                                 : Colors.red,
@@ -214,7 +218,8 @@ class _LivelinessFaceState extends State<LivelinessFace> {
                             Icons.verified_outlined,
                             color: livelinessValue == "Passed" &&
                                     similarityValue.contains(RegExp("[0-9]")) &&
-                                    double.parse(similarityValue.split("%")[0]) >=
+                                    double.parse(
+                                            similarityValue.split("%")[0]) >=
                                         80
                                 ? Colors.green
                                 : Colors.red,
@@ -257,7 +262,8 @@ class _LivelinessFaceState extends State<LivelinessFace> {
                               "Similarity: ",
                               similarityValue,
                               similarityValue.contains(RegExp("[0-9]"))
-                                  ? double.parse(similarityValue.split("%")[0]) >=
+                                  ? double.parse(
+                                              similarityValue.split("%")[0]) >=
                                           80
                                       ? Colors.blue
                                       : Colors.red
