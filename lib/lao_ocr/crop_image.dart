@@ -160,23 +160,23 @@ Future<MaskForCameraViewResult> _cropHalfImage(
     Uint8List fourCroppedBytes = Uint8List.fromList(fourCroppedList);
 
     //todo half five image
-    if (insideLine.direction == null ||
-        insideLine.direction ==
-            MaskForCameraViewInsideLineDirection.horizontal) {
-      y = 232;
-      x = 260;
-      w = 100;
-      h = 35;
-    } else {
-      y = 0;
-      x = (image.width / 10) * _position(insideLine.position);
-      w = image.width - x;
-      h = image.height.toDouble();
-    }
-    Image fiveCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
-    List<int> fiveCroppedList = encodeJpg(fiveCroppedImage);
-    Uint8List fiveCroppedBytes = Uint8List.fromList(fiveCroppedList);
+    // if (insideLine.direction == null ||
+    //     insideLine.direction ==
+    //         MaskForCameraViewInsideLineDirection.horizontal) {
+    //   y = 232;
+    //   x = 260;
+    //   w = 100;
+    //   h = 35;
+    // } else {
+    //   y = 0;
+    //   x = (image.width / 10) * _position(insideLine.position);
+    //   w = image.width - x;
+    //   h = image.height.toDouble();
+    // }
+    // Image fiveCroppedImage =
+    //     copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    // List<int> fiveCroppedList = encodeJpg(fiveCroppedImage);
+    // Uint8List fiveCroppedBytes = Uint8List.fromList(fiveCroppedList);
 
     //todo half six image
     if (insideLine.direction == null ||
@@ -359,64 +359,64 @@ Future<MaskForCameraViewResult> _cropHalfImage(
     List<int> secondCroppedList = encodeJpg(secondCroppedImage);
     Uint8List secondCroppedBytes = Uint8List.fromList(secondCroppedList);
 
-    //todo half third image
-    if (insideLine.direction == null ||
-        insideLine.direction ==
-            MaskForCameraViewInsideLineDirection.horizontal) {
-      y = 200;
-      x = 180;
-      w = 100;
-      h = 32;
-    } else {
-      y = 0;
-      x = (image.width / 10) * _position(insideLine.position);
-      w = image.width - x;
-      h = image.height.toDouble();
-    }
-    Image thirdCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
-    List<int> thirdCroppedList = encodeJpg(thirdCroppedImage);
-    Uint8List thirdCroppedBytes = Uint8List.fromList(thirdCroppedList);
-
-    //todo half four image
-    if (insideLine.direction == null ||
-        insideLine.direction ==
-            MaskForCameraViewInsideLineDirection.horizontal) {
-      y = 230;
-      x = 185;
-      w = 100;
-      h = 32;
-    } else {
-      y = 0;
-      x = (image.width / 10) * _position(insideLine.position);
-      w = image.width - x;
-      h = image.height.toDouble();
-    }
-    Image fourCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
-    List<int> fourCroppedList = encodeJpg(fourCroppedImage);
-    Uint8List fourCroppedBytes = Uint8List.fromList(fourCroppedList);
-
-    //todo half five image
-    if (insideLine.direction == null ||
-        insideLine.direction ==
-            MaskForCameraViewInsideLineDirection.horizontal) {
-      // y = 400;
-      y = (image.height / 10) * _position(insideLine.position);
-      x = 05;
-      w = image.width.toDouble() - x;
-      // w = image.width - x;
-      h = image.height - 250;
-    } else {
-      y = 0;
-      x = (image.width / 10) * _position(insideLine.position);
-      w = image.width - x;
-      h = image.height.toDouble();
-    }
-    Image fiveCroppedImage =
-        copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
-    List<int> fiveCroppedList = encodeJpg(fiveCroppedImage);
-    Uint8List fiveCroppedBytes = Uint8List.fromList(fiveCroppedList);
+    // //todo half third image
+    // if (insideLine.direction == null ||
+    //     insideLine.direction ==
+    //         MaskForCameraViewInsideLineDirection.horizontal) {
+    //   y = 200;
+    //   x = 180;
+    //   w = 100;
+    //   h = 32;
+    // } else {
+    //   y = 0;
+    //   x = (image.width / 10) * _position(insideLine.position);
+    //   w = image.width - x;
+    //   h = image.height.toDouble();
+    // }
+    // Image thirdCroppedImage =
+    //     copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    // List<int> thirdCroppedList = encodeJpg(thirdCroppedImage);
+    // Uint8List thirdCroppedBytes = Uint8List.fromList(thirdCroppedList);
+    //
+    // //todo half four image
+    // if (insideLine.direction == null ||
+    //     insideLine.direction ==
+    //         MaskForCameraViewInsideLineDirection.horizontal) {
+    //   y = 230;
+    //   x = 185;
+    //   w = 100;
+    //   h = 32;
+    // } else {
+    //   y = 0;
+    //   x = (image.width / 10) * _position(insideLine.position);
+    //   w = image.width - x;
+    //   h = image.height.toDouble();
+    // }
+    // Image fourCroppedImage =
+    //     copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    // List<int> fourCroppedList = encodeJpg(fourCroppedImage);
+    // Uint8List fourCroppedBytes = Uint8List.fromList(fourCroppedList);
+    //
+    // //todo half five image
+    // if (insideLine.direction == null ||
+    //     insideLine.direction ==
+    //         MaskForCameraViewInsideLineDirection.horizontal) {
+    //   // y = 400;
+    //   y = (image.height / 10) * _position(insideLine.position);
+    //   x = 05;
+    //   w = image.width.toDouble() - x;
+    //   // w = image.width - x;
+    //   h = image.height - 250;
+    // } else {
+    //   y = 0;
+    //   x = (image.width / 10) * _position(insideLine.position);
+    //   w = image.width - x;
+    //   h = image.height.toDouble();
+    // }
+    // Image fiveCroppedImage =
+    //     copyCrop(image, x:x.toInt(), y:y.toInt(), width:w.toInt(), height:h.toInt());
+    // List<int> fiveCroppedList = encodeJpg(fiveCroppedImage);
+    // Uint8List fiveCroppedBytes = Uint8List.fromList(fiveCroppedList);
 
     //todo half six image
     if (insideLine.direction == null ||

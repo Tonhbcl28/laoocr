@@ -9,13 +9,13 @@ import 'border_type.dart';
 import 'camera_description.dart';
 import 'crop_image.dart';
 import 'inside_line.dart';
-import 'inside_line_direction.dart';
-import 'inside_line_position.dart';
+// import 'inside_line_direction.dart';
+// import 'inside_line_position.dart';
 import 'result.dart';
 
 CameraController? _cameraController;
 late List<CameraDescription> _cameras;
-GlobalKey _stickyKey = GlobalKey();
+final GlobalKey _stickyKey = GlobalKey();
 
 double? _screenWidth;
 double? _screenHeight;
@@ -27,6 +27,7 @@ FlashMode _flashMode = FlashMode.auto;
 // ignore: must_be_immutable
 class MaskForCameraView extends StatefulWidget {
   MaskForCameraView({
+    super.key,
     required this.ocrType,
     this.title = "OCR Scan",
     // this.boxWidth = 300.0,
@@ -372,6 +373,7 @@ Future<MaskForCameraViewResult?> _cropPicture(
   XFile xFile = await _cameraController!.takePicture();
   File imageFile = File(xFile.path);
 
+  // ignore: use_build_context_synchronously
   RenderBox box = _stickyKey.currentContext!.findRenderObject() as RenderBox;
   double size = box.size.height * 2;
   MaskForCameraViewResult? result = await cropImage(
@@ -418,27 +420,27 @@ class _IconButton extends StatelessWidget {
 ///
 // Line inside box
 
-class _Line extends StatelessWidget {
-  const _Line(this.widget, {Key? key}) : super(key: key);
-  final MaskForCameraView widget;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: widget.insideLine!.direction == null ||
-              widget.insideLine!.direction ==
-                  MaskForCameraViewInsideLineDirection.horizontal
-          ? widget.boxWidth
-          : widget.boxBorderWidth,
-      height: widget.insideLine!.direction != null &&
-              widget.insideLine!.direction ==
-                  MaskForCameraViewInsideLineDirection.vertical
-          ? widget.boxHeight
-          : widget.boxBorderWidth,
-      color: widget.boxBorderColor,
-    );
-  }
-}
+// class _Line extends StatelessWidget {
+//   const _Line(this.widget, {Key? key}) : super(key: key);
+//   final MaskForCameraView widget;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: widget.insideLine!.direction == null ||
+//               widget.insideLine!.direction ==
+//                   MaskForCameraViewInsideLineDirection.horizontal
+//           ? widget.boxWidth
+//           : widget.boxBorderWidth,
+//       height: widget.insideLine!.direction != null &&
+//               widget.insideLine!.direction ==
+//                   MaskForCameraViewInsideLineDirection.vertical
+//           ? widget.boxHeight
+//           : widget.boxBorderWidth,
+//       color: widget.boxBorderColor,
+//     );
+//   }
+// }
 
 ///
 ///
@@ -466,10 +468,10 @@ class _IsCropping extends StatelessWidget {
 ///
 // To get position index for crop
 
-int _position(MaskForCameraViewInsideLinePosition? position) {
-  int p = 5;
-  if (position != null) {
-    p = position.index + 1;
-  }
-  return p;
-}
+// int _position(MaskForCameraViewInsideLinePosition? position) {
+//   int p = 5;
+//   if (position != null) {
+//     p = position.index + 1;
+//   }
+//   return p;
+// }

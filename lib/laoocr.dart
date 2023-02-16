@@ -6,7 +6,7 @@ import 'lao_ocr/main_crop.dart';
 import 'lao_ocr/mask_camera.dart';
 
 class LaoOCRScan extends StatefulWidget {
-  LaoOCRScan(
+  const LaoOCRScan(
       {Key? key,
       this.title = 'Lao OCR',
       this.subTitle = 'Select LAO OCR Type',
@@ -23,19 +23,19 @@ class LaoOCRScan extends StatefulWidget {
       this.showPopBack = false})
       : super(key: key);
 
-  String title;
-  String subTitle;
+  final String title;
+  final String subTitle;
   final Function onCapture;
-  bool doFaceReg;
+  final bool doFaceReg;
   final Function? onFaceReg;
-  bool showRetakeBtn;
-  Function? btnSubmit;
-  Function? btnSubmitOnFace;
-  String txtSubmit;
-  String txtSubmitOnFace;
-  bool showSubmitBtn;
-  bool showFaceSubmitBtn;
-  bool showPopBack;
+  final bool showRetakeBtn;
+  final Function? btnSubmit;
+  final Function? btnSubmitOnFace;
+  final String txtSubmit;
+  final String txtSubmitOnFace;
+  final bool showSubmitBtn;
+  final bool showFaceSubmitBtn;
+  final bool showPopBack;
 
   @override
   State<LaoOCRScan> createState() => _LaoOCRScanState();
@@ -56,7 +56,7 @@ class _LaoOCRScanState extends State<LaoOCRScan> {
   }
 
   //ocr type
-  List<Map<String, Object>> _rdoOcrType = [
+  final List<Map<String, Object>> _rdoOcrType = [
     {'id': 'idCard', 'name': 'ID Card'},
     {'id': 'passport', 'name': 'Passport'},
     // {'id': 'familyBook', 'name': 'Family Book'},
@@ -65,7 +65,7 @@ class _LaoOCRScanState extends State<LaoOCRScan> {
   String _onSelectRdo = '';
 
   //sub ocr type
-  List<Map<String, Object>> _rdoOcrSubType = [
+  final List<Map<String, Object>> _rdoOcrSubType = [
     {'id': 'whiteIdCard', 'name': 'White ID Card'},
     {'id': 'greenIdCard', 'name': 'Green ID Card'},
   ];
@@ -77,6 +77,10 @@ class _LaoOCRScanState extends State<LaoOCRScan> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16))),
         centerTitle: true,
       ),
       body: Form(
@@ -136,28 +140,32 @@ class _LaoOCRScanState extends State<LaoOCRScan> {
   }
 
   _onSubmit() {
-    if (_onSelectRdo.isNotEmpty) if (_rdoStartindex == 0) if (_onSelectSubRdo
-        .isNotEmpty)
-      _navigatePage(_onSelectRdo, _onSelectSubRdo);
-    else
-      _alertBox('Error!', 'No selected SUB OCR option!');
-    else
-      _navigatePage(_onSelectRdo);
-    else
+    if (_onSelectRdo.isNotEmpty) {
+      if (_rdoStartindex == 0) {
+        if (_onSelectSubRdo.isNotEmpty) {
+          _navigatePage(_onSelectRdo, _onSelectSubRdo);
+        } else {
+          _alertBox('Error!', 'No selected SUB OCR option!');
+        }
+      } else {
+        _navigatePage(_onSelectRdo);
+      }
+    } else {
       _alertBox('Error!', 'No selected OCR option!');
+    }
   }
 
-  _navigatePage(_ocrType, [String? _ocrSubType]) {
+  _navigatePage(ocrType, [String? ocrSubType]) {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
             builder: (context) => MaskOCRCam(
-                  ocrType: _ocrType,
-                  ocrSubType: _ocrSubType,
+                  ocrType: ocrType,
+                  ocrSubType: ocrSubType,
                   showPopBack: widget.showPopBack,
                   onCapture: (val, img) {
                     final Map data = {
-                      'kycType': _ocrType == 'idCard' ? _ocrSubType : _ocrType,
+                      'kycType': ocrType == 'idCard' ? ocrSubType : ocrType,
                       'data': val,
                       'kycImg': img
                     };
@@ -166,16 +174,18 @@ class _LaoOCRScanState extends State<LaoOCRScan> {
                   doFaceReg: widget.doFaceReg,
                   onFaceReg: widget.doFaceReg == true
                       ? (data) {
-                          if (widget.onFaceReg != null)
+                          if (widget.onFaceReg != null) {
                             widget.onFaceReg!(data);
-                          else
+                          } else {
                             null;
+                          }
                         }
                       : null,
                   btnSubmitOnFace: widget.showFaceSubmitBtn
                       ? () {
-                          if (widget.btnSubmitOnFace != null)
+                          if (widget.btnSubmitOnFace != null) {
                             widget.btnSubmitOnFace!();
+                          }
                         }
                       : null,
                   txtSubmitOnFace: widget.txtSubmitOnFace,
@@ -197,13 +207,13 @@ class _LaoOCRScanState extends State<LaoOCRScan> {
               actions: [
                 IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: Icon(Icons.close))
+                    icon: const Icon(Icons.close))
               ],
               title: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.error_outline,
                     size: 54,
                     color: Colors.red,

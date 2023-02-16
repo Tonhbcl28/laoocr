@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:io' as io;
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter_face_api/face_api.dart' as Regula;
+import 'package:flutter_face_api/face_api.dart' as regula;
 
-class LivenessFace extends StatefulWidget {
-  LivenessFace(
+class LivelinessFace extends StatefulWidget {
+  const LivelinessFace(
       {Key? key,
       required this.idCardProfileImg,
       this.doFaceReg,
@@ -18,24 +17,24 @@ class LivenessFace extends StatefulWidget {
   final Uint8List idCardProfileImg;
   final bool? doFaceReg;
   final Function? onFaceReg;
-  Function? btnSubmit;
-  String txtSubmit;
+  final Function? btnSubmit;
+  final String txtSubmit;
 
   @override
-  State<LivenessFace> createState() => _LivenessFaceState();
+  State<LivelinessFace> createState() => _LivelinessFaceState();
 }
 
-class _LivenessFaceState extends State<LivenessFace> {
+class _LivelinessFaceState extends State<LivelinessFace> {
   // static const String asstImg = 'assets/images/portrait.png';
   static const String asstImg =
       'https://github.com/Tonhbcl28/laoocr/blob/3e415a3cec15a97595fa3957280f72a3e2a409d7/assets/images/portrait.png?raw=true';
-  var image1 = new Regula.MatchFacesImage();
-  var image2 = new Regula.MatchFacesImage();
+  var image1 = regula.MatchFacesImage();
+  var image2 = regula.MatchFacesImage();
   // var img1 = Image.asset(asstImg);
   var img1 = Image.network(asstImg);
-  var img2;
-  String _similarity = "0";
-  String _liveness = "0";
+  late Image img2;
+  String similarityValue = "0";
+  String livelinessValue = "0";
 
   @override
   void initState() {
@@ -47,9 +46,9 @@ class _LivenessFaceState extends State<LivenessFace> {
     setState(() {
       img2 = Image.memory(widget.idCardProfileImg);
       image2.bitmap = base64Encode(widget.idCardProfileImg);
-      image2.imageType = Regula.ImageType.LIVE;
+      image2.imageType = regula.ImageType.LIVE;
     });
-    liveness();
+    liveliness();
   }
 
   setImage(bool first, Uint8List? imageFile, int type) {
@@ -80,11 +79,11 @@ class _LivenessFaceState extends State<LivenessFace> {
       // img1 = Image.asset(asstImg);
       img1 = Image.network(asstImg);
       img2 = Image.memory(widget.idCardProfileImg);
-      _similarity = "0";
-      _liveness = "0";
+      similarityValue = "0";
+      livelinessValue = "0";
     });
-    image1 = new Regula.MatchFacesImage();
-    // image2 = new Regula.MatchFacesImage();
+    image1 = regula.MatchFacesImage();
+    // image2 = Regula.MatchFacesImage();
     // image2.bitmap = base64Encode(widget.idCardProfileImg);
   }
 
@@ -93,24 +92,23 @@ class _LivenessFaceState extends State<LivenessFace> {
         image1.bitmap == "" ||
         image2.bitmap == null ||
         image2.bitmap == "") return;
-    setState(() => _similarity = "loading...");
-    var request = new Regula.MatchFacesRequest();
+    setState(() => similarityValue = "loading...");
+    var request = regula.MatchFacesRequest();
     request.images = [image1, image2];
-    Regula.FaceSDK.matchFaces(jsonEncode(request)).then((value) {
-      var response = Regula.MatchFacesResponse.fromJson(json.decode(value));
-      Regula.FaceSDK.matchFacesSimilarityThresholdSplit(
+    regula.FaceSDK.matchFaces(jsonEncode(request)).then((value) {
+      var response = regula.MatchFacesResponse.fromJson(json.decode(value));
+      regula.FaceSDK.matchFacesSimilarityThresholdSplit(
               jsonEncode(response!.results), 0.75)
           .then((str) {
-        var split = Regula.MatchFacesSimilarityThresholdSplit.fromJson(
+        var split = regula.MatchFacesSimilarityThresholdSplit.fromJson(
             json.decode(str));
-        setState(() => _similarity = split!.matchedFaces.length > 0
-            ? ((split.matchedFaces[0]!.similarity! * 100).toStringAsFixed(2) +
-                "%")
+        setState(() => similarityValue = split!.matchedFaces.isNotEmpty
+            ? ("${(split.matchedFaces[0]!.similarity! * 100).toStringAsFixed(2)}%")
             : "0");
 
         Map tempData = {
-          'liveliness': _liveness,
-          'similarity': _similarity,
+          'liveliness': livelinessValue,
+          'similarity': similarityValue,
           'liveImg': image1.bitmap
         };
         if (widget.doFaceReg == true) {
@@ -122,17 +120,17 @@ class _LivenessFaceState extends State<LivenessFace> {
     }).whenComplete(() {});
   }
 
-  liveness() => Regula.FaceSDK.startLiveness().then((value) {
-        var result = Regula.LivenessResponse.fromJson(json.decode(value));
+  liveliness() => regula.FaceSDK.startLiveness().then((value) {
+        var result = regula.LivenessResponse.fromJson(json.decode(value));
         setImage(true, base64Decode(result!.bitmap!.replaceAll("\n", "")),
-            Regula.ImageType.LIVE);
-        setState(() => _liveness = result.liveness == 0 ? "Passed" : "Fail");
+            regula.ImageType.LIVE);
+        setState(() => livelinessValue = result.liveness == 0 ? "Passed" : "Fail");
       }).whenComplete(() => matchFaces());
 
   Widget createButton(String text, VoidCallback onPress,
           [Color? color, double? width]) =>
       Container(
-        margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+        margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
         height: 50,
         width: width,
         child: ElevatedButton(
@@ -155,7 +153,7 @@ class _LivenessFaceState extends State<LivenessFace> {
 
   Widget buildResults(title, result, Color color) => Card(
         child: Text.rich(
-            TextSpan(text: title, style: TextStyle(fontSize: 32), children: [
+            TextSpan(text: title, style: const TextStyle(fontSize: 32), children: [
           TextSpan(
               text: " $result",
               style: TextStyle(
@@ -169,13 +167,13 @@ class _LivenessFaceState extends State<LivenessFace> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(16),
                   bottomRight: Radius.circular(16))),
           centerTitle: true,
-          title: Text(
-            "Liveness Verification",
+          title: const Text(
+            "Liveliness Verification",
             style: TextStyle(
               fontSize: 24.0,
               fontWeight: FontWeight.w600,
@@ -183,7 +181,7 @@ class _LivenessFaceState extends State<LivenessFace> {
           ),
         ),
         body: Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 50),
             width: double.infinity,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -193,30 +191,30 @@ class _LivenessFaceState extends State<LivenessFace> {
                   children: [
                     createImage(img1.image, Colors.red),
                     Container(
-                      padding: EdgeInsets.only(left: 4, right: 4),
+                      padding: const EdgeInsets.only(left: 4, right: 4),
                       child: Column(
                         children: [
                           Icon(
                             Icons.enhance_photo_translate_outlined,
-                            color: _liveness == "Passed"
+                            color: livelinessValue == "Passed"
                                 ? Colors.green
                                 : Colors.red,
                           ),
                           Container(
                             height: 30,
                             width: 5,
-                            color: _liveness == "Passed" &&
-                                    _similarity.contains(RegExp("[0-9]")) &&
-                                    double.parse(_similarity.split("%")[0]) >=
+                            color: livelinessValue == "Passed" &&
+                                    similarityValue.contains(RegExp("[0-9]")) &&
+                                    double.parse(similarityValue.split("%")[0]) >=
                                         80
                                 ? Colors.green
                                 : Colors.red,
                           ),
                           Icon(
                             Icons.verified_outlined,
-                            color: _liveness == "Passed" &&
-                                    _similarity.contains(RegExp("[0-9]")) &&
-                                    double.parse(_similarity.split("%")[0]) >=
+                            color: livelinessValue == "Passed" &&
+                                    similarityValue.contains(RegExp("[0-9]")) &&
+                                    double.parse(similarityValue.split("%")[0]) >=
                                         80
                                 ? Colors.green
                                 : Colors.red,
@@ -227,38 +225,39 @@ class _LivenessFaceState extends State<LivenessFace> {
                     createImage(img2.image, Colors.blue),
                   ]),
               Container(
-                  margin: EdgeInsets.only(top: 15),
-                  padding: EdgeInsets.only(left: 16, right: 16),
+                  margin: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(left: 16, right: 16),
                   child: Card(
-                    shadowColor: _liveness == "Passed" &&
-                            _similarity.contains(RegExp("[0-9]")) &&
-                            double.parse(_similarity.split("%")[0]) >= 80
+                    shadowColor: livelinessValue == "Passed" &&
+                            similarityValue.contains(RegExp("[0-9]")) &&
+                            double.parse(similarityValue.split("%")[0]) >= 80
                         ? Colors.green
                         : Colors.red,
                     child: Container(
-                      margin: EdgeInsets.all(8),
-                      padding: EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Results",
+                          const Text("Results",
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 5,
                                   decoration: TextDecoration.underline)),
                           buildResults(
-                              "Liveness : ",
-                              _liveness,
-                              _liveness == "Passed"
+                              "Liveliness : ",
+                              livelinessValue,
+                              livelinessValue == "Passed"
                                   ? Colors.green
                                   : Colors.red),
-                          Container(margin: EdgeInsets.fromLTRB(20, 0, 0, 0)),
+                          Container(
+                              margin: const EdgeInsets.fromLTRB(20, 0, 0, 0)),
                           buildResults(
                               "Similarity: ",
-                              _similarity,
-                              _similarity.contains(RegExp("[0-9]"))
-                                  ? double.parse(_similarity.split("%")[0]) >=
+                              similarityValue,
+                              similarityValue.contains(RegExp("[0-9]"))
+                                  ? double.parse(similarityValue.split("%")[0]) >=
                                           80
                                       ? Colors.blue
                                       : Colors.red
@@ -267,14 +266,14 @@ class _LivenessFaceState extends State<LivenessFace> {
                       ),
                     ),
                   )),
-              Container(margin: EdgeInsets.fromLTRB(0, 0, 0, 15)),
+              Container(margin: const EdgeInsets.fromLTRB(0, 0, 0, 15)),
               Row(children: [
                 Expanded(
                     child: createButton(
                         "Reset", () => clearResults(), Colors.red)),
                 Expanded(
                     child: createButton(
-                        "Selfie Again", () => liveness(), Colors.blue)),
+                        "Selfie Again", () => liveliness(), Colors.blue)),
               ]),
               // createButton("Match", () => matchFaces()),
             ])),

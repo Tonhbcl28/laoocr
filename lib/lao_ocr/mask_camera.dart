@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
@@ -11,12 +9,12 @@ import 'camera_description.dart';
 import 'inside_line.dart';
 import 'inside_line_direction.dart';
 import 'inside_line_position.dart';
-import 'liveness_face.dart';
+import 'liveliness_face.dart';
 import 'main_crop.dart';
 import 'result.dart';
 
 class MaskOCRCam extends StatefulWidget {
-  MaskOCRCam(
+  const MaskOCRCam(
       {Key? key,
       required this.ocrType,
       this.ocrSubType,
@@ -32,16 +30,16 @@ class MaskOCRCam extends StatefulWidget {
       : super(key: key);
 
   final String ocrType;
-  String? ocrSubType;
+  final String? ocrSubType;
   final Function onCapture;
   final bool? doFaceReg;
   final Function? onFaceReg;
-  bool showRetakeBtn;
-  Function? btnSubmit;
-  Function? btnSubmitOnFace;
-  String txtSubmit;
-  String txtSubmitOnFace;
-  bool showPopBack;
+  final bool showRetakeBtn;
+  final Function? btnSubmit;
+  final Function? btnSubmitOnFace;
+  final String txtSubmit;
+  final String txtSubmitOnFace;
+  final bool showPopBack;
 
   @override
   State<MaskOCRCam> createState() => _MaskOCRCamState();
@@ -55,25 +53,23 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
         : widget.ocrType == 'passport'
             ? _buildShowResultList(widget.ocrType)
             : Scaffold(
-                appBar: AppBar(title: Text('OCR')),
-                body: Container(
-                  child: Text('Selected OCR Type = ${widget.ocrType}',
-                      style: TextStyle(fontSize: 24)),
-                ),
+                appBar: AppBar(title: const Text('OCR')),
+                body: Text('Selected OCR Type = ${widget.ocrType}',
+                    style: const TextStyle(fontSize: 24)),
               );
   }
 
-  Widget _buildShowResultList(String _ocrType) {
+  Widget _buildShowResultList(String ocrType) {
     return MaskForCameraView(
-        ocrType: _ocrType,
-        boxHeight: _ocrType == "whiteIdCard"
+        ocrType: ocrType,
+        boxHeight: ocrType == "whiteIdCard"
             ? 187.0
-            : _ocrType == "greenIdCard"
+            : ocrType == "greenIdCard"
                 ? 178.0
                 : 210,
-        boxWidth: _ocrType == "whiteIdCard"
+        boxWidth: ocrType == "whiteIdCard"
             ? 300.0
-            : _ocrType == "greenIdCard"
+            : ocrType == "greenIdCard"
                 ? 300.0
                 : 300,
         visiblePopButton: widget.showPopBack,
@@ -83,14 +79,14 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
         ),
         boxBorderWidth: 2.6,
         cameraDescription: MaskForCameraViewCameraDescription.rear,
-        onTake: (MaskForCameraViewResult res) => (_ocrType == "whiteIdCard"
+        onTake: (MaskForCameraViewResult res) => (ocrType == "whiteIdCard"
                 ? imageToText([
                     res.secondPartImage,
                     res.thirdPartImage,
                     res.fourPartImage,
                     // res.fivePartImage
                   ])
-                : _ocrType == "greenIdCard"
+                : ocrType == "greenIdCard"
                     ? imageToText([
                         // res.croppedImage
                         res.firstPartImage,
@@ -114,7 +110,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                   builder: (context) =>
                       StatefulBuilder(builder: (context, setState) {
                     return Container(
-                      margin: EdgeInsets.only(top: 80),
+                      margin: const EdgeInsets.only(top: 80),
                       padding: const EdgeInsets.symmetric(
                           vertical: 12.0, horizontal: 14.0),
                       decoration: const BoxDecoration(
@@ -132,12 +128,12 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                                   ..pop()
                                   ..pop();
                               },
-                              icon: Icon(Icons.close)),
-                          shape: RoundedRectangleBorder(
+                              icon: const Icon(Icons.close)),
+                          shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(16))),
                           centerTitle: true,
-                          title: Text(
+                          title: const Text(
                             "OCR Results",
                             style: TextStyle(
                               fontSize: 24.0,
@@ -273,7 +269,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                                     ),
                                   ),
                                 if (widget.doFaceReg == true) ...[
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Expanded(
@@ -311,7 +307,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                               ],
                             ),
                             if (widget.btnSubmit != null) ...[
-                              SizedBox(height: 8),
+                              const SizedBox(height: 8),
                               SizedBox(
                                 width: double.infinity,
                                 height: 50,
@@ -331,23 +327,23 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                 )));
   }
 
-  List _ListDataValue() {
+  List listDataValue() {
     RegExp expDate1 =
-        new RegExp('^(?:0[0-9]|[12][0-9]|3[01])/(?:0[0-9]|1[01|02])/\\d{4}\$');
+        RegExp('^(?:0[0-9]|[12][0-9]|3[01])/(?:0[0-9]|1[01|02])/\\d{4}\$');
     RegExp expDate2 =
-        new RegExp('^(?:0[0-9]|[12][0-9]|3[01]) [A-Z]{3} \\d{4}\$');
+        RegExp('^(?:0[0-9]|[12][0-9]|3[01]) [A-Z]{3} \\d{4}\$');
     TextInputType keyboardInputTypeText = TextInputType.text;
     TextInputType keyboardInputTypeDate = TextInputType.datetime;
-    if (widget.ocrType == "idCard" && widget.ocrSubType == "greenIdCard")
+    if (widget.ocrType == "idCard" && widget.ocrSubType == "greenIdCard") {
       return [
         {
           "title": "Personal No.",
-          "format": new RegExp('\\d{3} \\d{4} \\d{4} \\d{4}'),
+          "format": RegExp('\\d{3} \\d{4} \\d{4} \\d{4}'),
           "inputType": keyboardInputTypeText
         },
         {
           "title": "Document No.",
-          "format": new RegExp('\\d{2}-\\d{2} \\d{6}'),
+          "format": RegExp('\\d{2}-\\d{2} \\d{6}'),
           "inputType": keyboardInputTypeText
         },
         {
@@ -366,11 +362,11 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
           "inputType": keyboardInputTypeDate
         },
       ];
-    else if (widget.ocrType == "idCard" && widget.ocrSubType == "whiteIdCard")
+    } else if (widget.ocrType == "idCard" && widget.ocrSubType == "whiteIdCard") {
       return [
         {
           "title": "Document No.",
-          "format": new RegExp('\\d{2}-[0-9]{7}'),
+          "format": RegExp('\\d{2}-[0-9]{7}'),
           "inputType": keyboardInputTypeText
         },
         {
@@ -389,11 +385,11 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
           "inputType": keyboardInputTypeDate
         },
       ];
-    else
+    } else {
       return [
         {
           "title": "Document No.",
-          "format": new RegExp('[A-Z]{2} \\d{7}'),
+          "format": RegExp('[A-Z]{2} \\d{7}'),
           "inputType": keyboardInputTypeText
         },
         {
@@ -412,6 +408,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
           "inputType": keyboardInputTypeText
         },
       ];
+    }
   }
 
   int _onRetakeCount = 0;
@@ -420,17 +417,17 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
     // print('lisssssss = $listResult');
     _checkFormatValList = [];
     if (listResult.isNotEmpty) {
-      if (listResult.length < _ListDataValue().length) {
-        var difVal = _ListDataValue().length - listResult.length;
+      if (listResult.length < listDataValue().length) {
+        var difVal = listDataValue().length - listResult.length;
         for (int i = 0; i < difVal; i++) {
           listResult.add("");
         }
       }
 
       final List tempData = [];
-      for (int i = 0; i < _ListDataValue().length; i++) {
+      for (int i = 0; i < listDataValue().length; i++) {
         final Map tempp = {
-          "title": _ListDataValue()[i]['title'].toString(),
+          "title": listDataValue()[i]['title'].toString(),
           'value': listResult[i]
         };
         tempData.add(tempp);
@@ -441,13 +438,14 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
       return SizedBox(
         height: MediaQuery.of(context).size.height / 2,
         child: ListView.builder(
-          itemCount: _ListDataValue().length,
+          itemCount: listDataValue().length,
           itemBuilder: (context, index) {
-            if ((_ListDataValue()[index]['format'] as RegExp)
-                .hasMatch(listResult[index]))
+            if ((listDataValue()[index]['format'] as RegExp)
+                .hasMatch(listResult[index])) {
               _checkFormatValList.add(true);
-            else
+            } else {
               _checkFormatValList.add(false);
+            }
 
             return Card(
               child: ListTile(
@@ -457,30 +455,30 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                     children: [
                       Expanded(
                         child: Text(
-                          _ListDataValue()[index]['title'].toString(),
+                          listDataValue()[index]['title'].toString(),
                         ),
                       ),
                       Text(
                         '${listResult[index]}',
                         style: TextStyle(
-                            color: (_ListDataValue()[index]['format'] as RegExp)
+                            color: (listDataValue()[index]['format'] as RegExp)
                                     .hasMatch(listResult[index])
                                 ? Colors.green
                                 : Colors.red),
                       ),
                     ]),
                 trailing: _onRetakeCount >= 3
-                    ? (_ListDataValue()[index]['format'] as RegExp)
+                    ? (listDataValue()[index]['format'] as RegExp)
                             .hasMatch(listResult[index])
                         ? null
                         : IconButton(
                             onPressed: () => _onEditDocData(
                                   index: index,
                                   editText: listResult[index],
-                                  inputKeyboardType: _ListDataValue()[index]
+                                  inputKeyboardType: listDataValue()[index]
                                       ['inputType'],
                                 ),
-                            icon: Icon(Icons.edit_note))
+                            icon: const Icon(Icons.edit_note))
                     : null,
               ),
             );
@@ -488,7 +486,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
         ),
       );
     } else {
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(),
       );
     }
@@ -501,21 +499,21 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => LivenessFace(
+              builder: (context) => LivelinessFace(
                     idCardProfileImg: imageBytes,
                     doFaceReg: widget.doFaceReg,
                     onFaceReg: (data) {
                       widget.onFaceReg!(data);
                     },
                     btnSubmit: widget.btnSubmitOnFace,
-                    txtSubmit: widget.txtSubmitOnFace!,
+                    txtSubmit: widget.txtSubmitOnFace,
                   )),
           (route) => true);
     } else {
       // print('Please correct data');
       showDialog(
           context: context,
-          builder: (context) => AlertDialog(
+          builder: (context) => const AlertDialog(
                 alignment: Alignment.center,
                 icon: Icon(
                   Icons.error_outline,
@@ -549,7 +547,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ClipOval(
+                    const ClipOval(
                       child: Icon(
                         Icons.edit_note_outlined,
                         size: 68,
@@ -558,7 +556,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                     ),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.all(4),
+                        padding: const EdgeInsets.all(4),
                         child: Column(
                           children: [
                             Text(
@@ -569,8 +567,8 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "Edit ${_ListDataValue()[index]['title']}",
-                              style: TextStyle(
+                              "Edit ${listDataValue()[index]['title']}",
+                              style: const TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
@@ -582,7 +580,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                                   controller: _txtInput,
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
-                                        new RegExp("[0-9A-Z-/ ]")),
+                                        RegExp("[0-9A-Z-/ ]")),
                                   ],
                                   textCapitalization:
                                       TextCapitalization.characters,
@@ -595,18 +593,18 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                                           const EdgeInsets.symmetric(
                                               vertical: 5, horizontal: 10),
                                       label: Container(
-                                        padding: EdgeInsets.all(8),
+                                        padding: const EdgeInsets.all(8),
                                         child: Text.rich(
                                           TextSpan(
                                             children: <InlineSpan>[
                                               WidgetSpan(
                                                 child: Text(
-                                                  "${_ListDataValue()[index]['title']}",
-                                                  style: TextStyle(
+                                                  "${listDataValue()[index]['title']}",
+                                                  style: const TextStyle(
                                                       color: Colors.red),
                                                 ),
                                               ),
-                                              WidgetSpan(
+                                              const WidgetSpan(
                                                 child: Text(
                                                   '*',
                                                   style: TextStyle(
@@ -621,12 +619,12 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                                           borderRadius:
                                               BorderRadius.circular(5),
                                           borderSide:
-                                              BorderSide(color: Colors.red)),
+                                              const BorderSide(color: Colors.red)),
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(5),
                                           borderSide:
-                                              BorderSide(color: Colors.red))),
+                                              const BorderSide(color: Colors.red))),
                                   textAlign: TextAlign.center,
                                   keyboardType: inputKeyboardType,
                                   maxLength: 18,
@@ -648,7 +646,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
                           setState(() {
-                            if (_ListDataValue()[index]['title'] ==
+                            if (listDataValue()[index]['title'] ==
                                 "Issued Date") {
                               listResult[index] = _txtInput.text;
                               if (listResult[index + 1].toString().isEmpty) {
@@ -657,7 +655,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                                     .substring(
                                         listResult[index].toString().length -
                                             4);
-                                if (new RegExp("\\d{4}").hasMatch(tyear4d)) {
+                                if (RegExp("\\d{4}").hasMatch(tyear4d)) {
                                   int tyear = int.parse(tyear4d);
                                   String tDate = listResult[index]
                                       .toString()
@@ -688,7 +686,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                                 Color(0xFF660000),
                               ],
                             )),
-                        child: Text(
+                        child: const Text(
                           "Process",
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
@@ -710,7 +708,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
     if (widget.ocrType == 'idCard') {
       // listResult = [];
       if (widget.ocrSubType == 'greenIdCard') {
-        if (inputImgs.isNotEmpty)
+        if (inputImgs.isNotEmpty) {
           for (int i = 0; i < inputImgs.length; i++) {
             // print(inputImg);
             Uint8List imageInUnit8List = inputImgs[i];
@@ -729,7 +727,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                 await textDetector.processImage(inputImage);
 
             setState(() {
-              String text = recognisedText.text;
+              // String text = recognisedText.text;
               for (TextBlock block in recognisedText.blocks) {
                 //each block of text/section of text
                 final String text = block.text;
@@ -789,21 +787,21 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                 // }
 
                 result = text;
-                if (text.contains(new RegExp('[0-9]'))) {
+                if (text.contains(RegExp('[0-9]'))) {
                   if (result.contains('o')) {
                     result = result.replaceAll(RegExp(r'o'), '0');
                   } else if (result.contains('O')) {
                     result = result.replaceAll(RegExp(r'O'), '0');
                   }
                   if (i == 0) {
-                    RegExp exp = new RegExp('\\d{3} \\d{4} \\d{4} \\d{4}');
+                    RegExp exp = RegExp('\\d{3} \\d{4} \\d{4} \\d{4}');
                     final match = exp.firstMatch(result);
                     if (match?.group(0) != null) {
                       // print("match data extract $i = ${match?.group(0)}");
                       listResult.add(match?.group(0));
                     }
                   } else if (i == 1) {
-                    RegExp exp = new RegExp('\\d{2}-\\d{2} \\d{6}');
+                    RegExp exp = RegExp('\\d{2}-\\d{2} \\d{6}');
                     final match = exp.firstMatch(result);
                     if (match?.group(0) != null) {
                       // print("match data extract $i = ${match?.group(0)}");
@@ -824,7 +822,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                       }
 
                       // print('ok res = ${result}');
-                      RegExp exp = new RegExp('\\d{2}/\\d{2}/\\d{4}');
+                      RegExp exp = RegExp('\\d{2}/\\d{2}/\\d{4}');
                       final match = exp.firstMatch(result);
                       if (match?.group(0) != null) {
                         // print(
@@ -844,6 +842,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
             //   listResult.add(result);
             // });
           }
+        }
         if (listResult.length == 4) {
           String tempList = listResult.last;
           // print('last index = $tempList');
@@ -859,7 +858,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
         }
         // print('list result = $listResult');
       } else {
-        if (inputImgs.isNotEmpty)
+        if (inputImgs.isNotEmpty) {
           for (int i = 0; i < inputImgs.length; i++) {
             // print(inputImg);
             Uint8List imageInUnit8List = inputImgs[i];
@@ -878,7 +877,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                 await textDetector.processImage(inputImage);
 
             setState(() {
-              String text = recognisedText.text;
+              // String text = recognisedText.text;
               for (TextBlock block in recognisedText.blocks) {
                 //each block of text/section of text
                 final String text = block.text;
@@ -892,11 +891,9 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                 //   }
                 // }
 
-                if (text.contains(new RegExp('[0-9]'))) {
+                if (text.contains(RegExp('[0-9]'))) {
                   if (text.contains('-')) {
-                    result = text.split('-').first.split(' ').last +
-                        '-' +
-                        text.split('-').last;
+                    result = '${text.split('-').first.split(' ').last}-${text.split('-').last}';
                     // print(result);
                     if (result.length >= 10 &&
                         (result.contains('-') || result.contains('/'))) {
@@ -971,6 +968,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
             //   listResult.add(result);
             // });
           }
+        }
         if (listResult.length == 3) {
           String tempList = listResult.last;
           // print('last index = $tempList');
@@ -987,7 +985,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
         // print('list result = $listResult');
       }
     } else {
-      if (inputImgs.isNotEmpty)
+      if (inputImgs.isNotEmpty) {
         for (int i = 0; i < inputImgs.length; i++) {
           // print(inputImg);
           Uint8List imageInUnit8List = inputImgs[i];
@@ -1006,23 +1004,23 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
               await textDetector.processImage(inputImage);
 
           setState(() {
-            String text = recognisedText.text;
+            // String text = recognisedText.text;
             for (TextBlock block in recognisedText.blocks) {
               //each block of text/section of text
               final String text = block.text;
               // print("block of text $i: ");
               // print(text);
-              if (i == 0)
+              if (i == 0) {
                 for (TextLine line in block.lines) {
                   //each line within a text block
                   for (TextElement element in line.elements) {
                     //each word within a line
                     // result += element.text + " ";
-                    passportAllTextExtract += element.text + " ";
+                    passportAllTextExtract += "${element.text} ";
                   }
                 }
-              else if (i == 1) {
-                if (text.contains(new RegExp('[0-9]'))) {
+              } else if (i == 1) {
+                if (text.contains(RegExp('[0-9]'))) {
                   result = text;
                   // print("value = $result");
 
@@ -1061,7 +1059,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
                 }
               } else {
                 result = text;
-                RegExp exp = new RegExp('\\d{2} [A-Z]{3} \\d{4}');
+                RegExp exp = RegExp('\\d{2} [A-Z]{3} \\d{4}');
                 final match = exp.firstMatch(result);
                 if (match?.group(0) != null) {
                   // print("match data extract = ${match?.group(0)}");
@@ -1073,6 +1071,7 @@ class _MaskOCRCamState extends State<MaskOCRCam> {
             // result += "\n\n";
           });
         }
+      }
       if (listResult.length == 3) {
         String tempList = listResult[1];
         // print('last index = $tempList');

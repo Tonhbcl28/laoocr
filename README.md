@@ -6,7 +6,7 @@ The First Lao OCR and Face Liveliness. Which you can scan Lao ID card(White ID c
 The package can extract necessary data.
 And you also take liveliness and match image from kyc document to compare that is the right person using the document or not.
 
-- This this the first version which can work with Lao ID and passport only, If you want me to develop more for Lao family book please support me! and let me know.
+- This is the first version which can work with Lao ID and passport only, If you want me to develop more for Lao family book please support me! and let me know.
 - you can contact me at *phoutthakonebcl@gmail.com
 
 ## Preview
