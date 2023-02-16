@@ -80,6 +80,6 @@ LaoOCRScan(
 ## Additional information
 This Package can help Lao developer to work with KYC document and it's very easy to use with the high performance.
 It can save the company cost too much.
-- This this the first version which can work with Lao ID and passport only, If you want me to develop more for Lao family book please support me! and let me know.
+- This is the first version which can work with Lao ID and passport only, If you want me to develop more for Lao family book please support me! and let me know.
 - you can contact me at *phoutthakonebcl@gmail.com
   Thank you so much 😘 (❁´◡`❁).
