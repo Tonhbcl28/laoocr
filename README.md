@@ -77,6 +77,12 @@ LaoOCRScan(
     )
 ```
 
+## Donation - Support Me
+#Lao QR
+![](https://github.com/Tonhbcl28/laoocr/blob/main/assets/images/supportme.jpg?raw=true)
+#Binance - BTC
+![](https://github.com/Tonhbcl28/laoocr/blob/main/assets/images/supportme.jpg?raw=true)
+
 ## Additional information
 This Package can help Lao developer to work with KYC document and it's very easy to use with the high performance.
 It can save the company cost too much.
