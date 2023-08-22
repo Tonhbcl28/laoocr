@@ -11,4 +11,4 @@
 * Warning issued fixed and null safety
 
 ## 0.0.8
-* Warning issued fixed and null safety and improve performance
+* New SDK Update and null safety and improve performance

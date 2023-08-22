@@ -1,10 +1,10 @@
 name: laoocr
 description: Lao OCR Scanner (Lao ID Card, Passport, etc...) and Face Liveliness.
-version: 0.0.7
+version: 0.0.8
 homepage: https://github.com/Tonhbcl28/laoocr.git
 
 environment:
-  sdk: '>=2.18.4 <3.0.0'
+  sdk: '>=2.18.4 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
