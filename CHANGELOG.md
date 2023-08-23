@@ -12,3 +12,6 @@
 
 ## 0.0.8
 * New SDK Update and null safety and improve performance
+
+## 0.0.9
+* New SDK Update and null safety and improve performance
